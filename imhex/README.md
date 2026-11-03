@@ -9,8 +9,9 @@ y colorea cada sección. El panel «Pattern Data» muestra el árbol de lo que H
   `literal true`…).
 
 Solo describe lo que está en `docs/formato-omd.md`. Lo que no se entiende va **en gris** y
-con el comentario «sin descifrar», y lo que es hipótesis lleva `[hipótesis]`. Cuando se
-descifre algo nuevo, se añade aquí y se ve.
+con el comentario «not decoded», y lo que es hipótesis lleva `[hypothesis]`. Cuando se
+descifre algo nuevo, se añade aquí y se ve. Lo que enseña ImHex (nombres, comentarios
+y textos) está en inglés.
 
 ## Usarlo
 

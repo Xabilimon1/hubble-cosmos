@@ -50,6 +50,6 @@ def test_textos_iguales_que_hubble(verifica, zip_, final):
 
 def test_detecta_un_patron_que_lee_mal(verifica, tmp_path):
     malo = tmp_path / "malo.hexpat"
-    malo.write_text(PATRON.read_text().replace("largo_texto(inicio, 8, fin)", "largo_texto(inicio, 4, fin)"))
+    malo.write_text(PATRON.read_text().replace("text_length(start, 8, end)", "text_length(start, 4, end)"))
     assert malo.read_text() != PATRON.read_text()
     assert verifica.diferencias(Path(IMHEX), malo, _leer(*MUESTRAS[0])) != []

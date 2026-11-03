@@ -22,13 +22,13 @@ PATRON = Path(__file__).resolve().parent / "omd.hexpat"
 def _textos(nodo, etiqueta, salida):
     """Los textos de la sección `etiqueta` en la salida JSON del patrón, en orden."""
     if isinstance(nodo, dict):
-        if nodo.get("etiqueta") == etiqueta and isinstance(nodo.get("datos"), dict):
-            for registros in _buscar(nodo["datos"], "registros"):
+        if nodo.get("tag") == etiqueta and isinstance(nodo.get("data"), dict):
+            for registros in _buscar(nodo["data"], "records"):
                 for r in registros:
-                    if "texto" in r:
+                    if "text" in r:
                         # El JSON lleva el valor formateado: entre comillas, en codificación
                         # URL y con el NUL.
-                        salida.append(unquote_to_bytes(r["texto"])[1:-1].split(b"\0")[0])
+                        salida.append(unquote_to_bytes(r["text"])[1:-1].split(b"\0")[0])
         for v in nodo.values():
             _textos(v, etiqueta, salida)
     elif isinstance(nodo, list):
