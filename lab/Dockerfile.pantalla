@@ -1,0 +1,12 @@
+# Pantalla virtual temporal para la activación de la evaluación (register.exe tiene
+# ventana). Se construye encima de hubble-lab:2 y se borra al terminar. ~217 MB.
+FROM hubble-lab:2
+
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends xvfb x11vnc \
+ && rm -rf /var/lib/apt/lists/*
+USER hubble
+
+COPY --chmod=755 pantalla.sh /usr/local/bin/pantalla.sh
+ENTRYPOINT ["/usr/local/bin/pantalla.sh"]

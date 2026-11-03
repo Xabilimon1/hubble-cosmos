@@ -1,0 +1,19 @@
+# Ficheros compilados de terceros y salidas del análisis: no se suben
+/muestras/
+/salida/
+*.omd
+*.prj
+*.ohl
+*.ocs
+*.dfp
+*.smd
+
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+.DS_Store
+
+# Kits de evaluación de Base 100: suyos, no se suben
+/kits/
+.claude/worktrees/

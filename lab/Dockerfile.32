@@ -1,0 +1,20 @@
+# Laboratorio de Hubble, 32 bits: Wine de 32 bits para el compilador de Cosmos x86
+# (cosmakecon.exe del kit 8.6 de 32 bits). Corre en x-server (x86-64).
+# El kit no va en la imagen: se monta en /cosmos (solo lectura). La activación de la
+# evaluación se añade después, con la misma clave que en 64 bits (lab/README.md).
+FROM debian:trixie-slim
+
+ENV WINEPREFIX=/wine WINEARCH=win32 WINEDEBUG=-all
+
+# Igual que Dockerfile: todo en una capa y enlaces duros entre las DLL del prefijo y /usr/lib
+RUN dpkg --add-architecture i386 \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends wine32:i386 \
+ && rm -rf /var/lib/apt/lists/* \
+ && useradd -m hubble && mkdir /wine && chown hubble /wine \
+ && su hubble -s /bin/sh -c '/usr/lib/wine/wine wineboot --init && /usr/lib/wine/wineserver -w' \
+ && hardlink --content /usr/lib/i386-linux-gnu/wine /wine
+
+USER hubble
+WORKDIR /trabajo
+ENTRYPOINT ["/usr/lib/wine/wine"]
