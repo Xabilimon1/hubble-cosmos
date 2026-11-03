@@ -155,7 +155,7 @@ struct Statement {
     u32 x2c [[hidden]];
 } [[format("fmt_stm")]];
 
-fn fmt_stm(Statement s) { return std::format("{}  · next {}", s.type, fmt_ref(s.next)); };
+fn fmt_stm(Statement s) { return std::format("{}, next {}", s.type, fmt_ref(s.next)); };
 
 // --- PRO: procedimientos (64 bytes)
 enum ProcType : u8 {
@@ -178,7 +178,7 @@ struct Procedure {
     Ref body [[comment("first statement")]]; u32 x3c [[hidden]];
 } [[format("fmt_pro")]];
 
-fn fmt_pro(Procedure p) { return std::format("{} · name {}", p.type, fmt_ref(p.r28)); };
+fn fmt_pro(Procedure p) { return std::format("{}, name {}", p.type, fmt_ref(p.r28)); };
 
 // --- OBJ: objetos (80 bytes): globales, locales, parámetros y miembros de Struct
 struct Object {
@@ -199,7 +199,7 @@ struct Object {
     u8 x48[8] [[color(GREY)]];
 } [[format("fmt_obj")]];
 
-fn fmt_obj(Object o) { return std::format("object · name {} · class {}", fmt_ref(o.name), fmt_ref(o.class)); };
+fn fmt_obj(Object o) { return std::format("object, name {}, class {}", fmt_ref(o.name), fmt_ref(o.class)); };
 
 // --- CLA: clases (88 bytes); CLA 0 es el propio módulo
 struct Class {
@@ -219,7 +219,7 @@ struct Class {
     Ref procedures [[comment("first PRO")]]; u32 x54 [[hidden]];
 } [[format("fmt_cla")]];
 
-fn fmt_cla(Class c) { return std::format("class · name {} · base {}", fmt_ref(c.name), fmt_ref(c.base)); };
+fn fmt_cla(Class c) { return std::format("class, name {}, base {}", fmt_ref(c.name), fmt_ref(c.base)); };
 
 // --- FCT: controles de formulario (208 bytes); FCT 0 es el formulario
 enum ControlType : u16 {
@@ -261,7 +261,7 @@ struct Control {
     u8 x90[0x40] [[color(GREY), comment("lists: +0xA8 bits and +0xB0 columns/CURSORTYPE")]];
 } [[format("fmt_fct")]];
 
-fn fmt_fct(Control c) { return std::format("{} · {} {} {} {}", c.type, c.x, c.y, c.width, c.height); };
+fn fmt_fct(Control c) { return std::format("{}: {} {} {} {}", c.type, c.x, c.y, c.width, c.height); };
 
 // --- LIB e INC (24 bytes): LIBRARIES e INCLUDES
 struct Library {
@@ -381,10 +381,11 @@ struct Entry {
     char tag[4] [[format("fmt_tag")]];
     u32 n [[name("records")]];
     u32 record_size;
+    std::core::set_display_name(this, std::string::substr(tag, 0, 3));  // el árbol enseña la sección, no [0], [1]…
 } [[format("fmt_entry")]];
 
 fn fmt_tag(str e) { return std::string::substr(e, 0, 3); };
-fn fmt_entry(Entry e) { return std::format("{} · {} records of {} bytes", fmt_tag(e.tag), e.n, e.record_size); };
+fn fmt_entry(Entry e) { return std::format("{} records of {} bytes", e.n, e.record_size); };
 
 struct Header {
     char magic[4];
