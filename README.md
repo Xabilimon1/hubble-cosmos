@@ -10,7 +10,7 @@ produced by the real compiler.
 This covers Cosmos 8.2 to 8.6 (format `0x7230`). An older format, `0x3211`, is read partially: there
 is no compiler of that version to run the round trip, so its output is marked as unverified.
 
-<!-- ImHex demo: docs/imhex.gif -->
+![The .omd file in ImHex, read field by field with imhex/omd.hexpat](docs/imhex.gif)
 
 ## How results are verified
 
